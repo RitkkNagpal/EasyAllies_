@@ -3,9 +3,17 @@ import { Person, Search, Chat, Notifications } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
+import {logoutCall} from '../../apiCalls'
+
 export default function Topbar() {
-  const {user} = useContext(AuthContext);
+  const {user,dispatch} = useContext(AuthContext);
   const PF = process.env.REACT_APP_PUBLIC_FOLDER
+
+  const handleClick = () => {
+    logoutCall(
+      dispatch
+    );
+  }
   return (
     <div className="topbarContainer">
       <div className="topbarLeft">
@@ -45,6 +53,7 @@ export default function Topbar() {
         <Link to={`/profile/${user.username}`}>
         <img src={user.profilePicture ? PF+user.profilePicture : PF+"person/noAvatar.png"} alt="" className="topbarImg" />
         </Link>
+        <button className="topbarLink" onClick={handleClick}>Sign out</button>
       </div>
     </div>
   );

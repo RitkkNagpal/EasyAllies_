@@ -2,6 +2,7 @@ import Home from "./pages/home/Home";
 import Profile from "./pages/profile/Profile";
 import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
+import Messenger from "./pages/messenger/Messenger";
 import {
   BrowserRouter as Router,
   Route,
@@ -22,7 +23,12 @@ function App() {
           path="/register"
           element={user ? <Navigate to="/" /> : <Register />}
         />
+        <Route
+          path="/messenger"
+          element={!user ? <Navigate to="/" /> : <Messenger />}
+        />
         <Route path="/profile/:username" element={<Profile />} />
+
       </Routes>
     </Router>
   );

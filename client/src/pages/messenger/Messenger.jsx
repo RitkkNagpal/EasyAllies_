@@ -36,11 +36,7 @@ export default function Messenger() {
       setMessages((prev) => [...prev, arrivalMessage]);
   }, [arrivalMessage, currentChat]);
   useEffect(() => {
-<<<<<<< HEAD
     socket.current.emit("addUser", user?._id);
-=======
-    socket.current.emit("addUser", user._id);
->>>>>>> 3c287a22516a28d8cce561b8c2fbd33a78dce446
 
     socket.current.on("getUsers", (users) => {
       setOnlineUsers(
@@ -50,20 +46,12 @@ export default function Messenger() {
   }, [user]);
 
   useEffect(() => {
-<<<<<<< HEAD
     socket?.current.emit("addUser", user?._id);
-=======
-    socket?.current.emit("addUser", user._id);
->>>>>>> 3c287a22516a28d8cce561b8c2fbd33a78dce446
   }, [user]);
   useEffect(() => {
     const getConversations = async () => {
       try {
-<<<<<<< HEAD
         const res = await axios.get("/conversations/" + user?._id);
-=======
-        const res = await axios.get("/conversations/" + user._id);
->>>>>>> 3c287a22516a28d8cce561b8c2fbd33a78dce446
         setConversations(res.data);
       } catch (error) {
         console.log(error);
@@ -86,29 +74,17 @@ export default function Messenger() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const message = {
-<<<<<<< HEAD
       sender: user?._id,
-=======
-      sender: user._id,
->>>>>>> 3c287a22516a28d8cce561b8c2fbd33a78dce446
       text: newMessage,
       conversationId: currentChat._id,
     };
 
     const receiverId = currentChat.members.find(
-<<<<<<< HEAD
       (member) => member !== user?._id
     );
 
     socket.current.emit("sendMessage", {
       senderId: user?._id,
-=======
-      (member) => member !== user._id
-    );
-
-    socket.current.emit("sendMessage", {
-      senderId: user._id,
->>>>>>> 3c287a22516a28d8cce561b8c2fbd33a78dce446
       receiverId,
       text: newMessage,
     });
@@ -177,11 +153,7 @@ export default function Messenger() {
           <div className="chatOnlineWrapper">
             <ChatOnline
               onlineUsers={onlineUsers}
-<<<<<<< HEAD
               currentId={user?._id}
-=======
-              currentId={user._id}
->>>>>>> 3c287a22516a28d8cce561b8c2fbd33a78dce446
               setCurrentChat={setCurrentChat}
             />
           </div>

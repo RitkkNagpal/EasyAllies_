@@ -126,7 +126,7 @@ export default function Messenger() {
                 <div className="chatBoxTop">
                   {messages.map((m) => (
                     <div ref={scrollRef}>
-                      <Message message={m} own={m.sender === user._id} />
+                      <Message message={m} own={m.sender === user?._id} />
                     </div>
                   ))}
                 </div>

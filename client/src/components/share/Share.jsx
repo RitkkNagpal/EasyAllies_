@@ -18,26 +18,28 @@ export default function Share() {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    const newPost = {
-      userId: user._id,
-      desc: desc.current.value,
-    };
-    if (file) {
-      const data = new FormData();
-      const fileName = Date.now() + file.name;
-      data.append("name", fileName);
-      data.append("file", file);
-      newPost.img = fileName;
-      console.log(newPost);
+    if(desc.current.value){
+      const newPost = {
+        userId: user._id,
+        desc: desc.current.value,
+      };
+      if (file) {
+        const data = new FormData();
+        const fileName = Date.now() + file.name;
+        data.append("name", fileName);
+        data.append("file", file);
+        newPost.img = fileName;
+        console.log(newPost);
+        try {
+          await axios.post("/upload", data);
+        } catch (err) {}
+      }
       try {
-        await axios.post("/upload", data);
+        await axios.post("/posts", newPost);
+        window.location.reload();
       } catch (err) {}
     }
-    try {
-      await axios.post("/posts", newPost);
-      window.location.reload();
-    } catch (err) {}
-  };
+    };
 
   return (
     <div className="share">
@@ -78,7 +80,7 @@ export default function Share() {
                 onChange={(e) => setFile(e.target.files[0])}
               />
             </label>
-            <div className="shareOption">
+            {/* <div className="shareOption">
               <Label htmlColor="blue" className="shareIcon" />
               <span className="shareOptionText">Tag</span>
             </div>
@@ -89,7 +91,7 @@ export default function Share() {
             <div className="shareOption">
               <EmojiEmotions htmlColor="goldenrod" className="shareIcon" />
               <span className="shareOptionText">Feelings</span>
-            </div>
+            </div> */}
           </div>
           <button className="shareButton" type="submit">
             Share

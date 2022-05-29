@@ -1,17 +1,37 @@
 import "./rightbar.css";
-import { Users } from "../../dummyData";
+// import { Users } from "../../dummyData";
 import Online from "../online/Online";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, useRef } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import { Add, Remove } from "@material-ui/icons";
+import { io, Socket } from "socket.io-client";
 
 export default function Rightbar({ user }) {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const [friends, setFriends] = useState([]);
   const { user: currentUser, dispatch } = useContext(AuthContext);
   const [followed, setFollowed] = useState(false);
+  const socket = useRef();
+  const [onlineUsers, setOnlineUsers] = useState([]);
+
+  useEffect(() => {
+    socket.current = io("ws://localhost:8900");
+  }, []);
+
+  useEffect(() => {
+    socket?.current.emit("addUser", currentUser?._id);
+  }, [currentUser]);
+
+  useEffect(() => {
+    socket.current.emit("addUser", currentUser?._id);
+    socket.current.on("getUsers", (users) => {
+      setOnlineUsers(
+        currentUser.followings.filter((f) => users.some((u) => u.userId === f))
+      );
+    });
+  }, [currentUser]);
 
   useEffect(() => {
     setFollowed(
@@ -55,7 +75,7 @@ export default function Rightbar({ user }) {
       }
       console.log("here1");
       setFollowed(!followed);
-      console.log("in handle click"+followed);
+      console.log("in handle click" + followed);
     } catch (err) {
       console.log(err);
     }
@@ -73,9 +93,8 @@ export default function Rightbar({ user }) {
         <img className="rightbarAd" src="assets/ad.png" alt="" />
         <h4 className="rightbarTitle">Online Friends</h4>
         <ul className="rightbarFriendList">
-          {Users.map((u) => (
-            <Online key={u.id} user={u} />
-          ))}
+          <Online onlineUsers={onlineUsers} currentId={currentUser?._id} />
+          {console.log(onlineUsers)}
         </ul>
       </>
     );

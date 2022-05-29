@@ -35,6 +35,7 @@ export default function Messenger() {
       currentChat?.members.includes(arrivalMessage.sender) &&
       setMessages((prev) => [...prev, arrivalMessage]);
   }, [arrivalMessage, currentChat]);
+  
   useEffect(() => {
     socket.current.emit("addUser", user?._id);
 
@@ -156,6 +157,7 @@ export default function Messenger() {
               currentId={user?._id}
               setCurrentChat={setCurrentChat}
             />
+            {console.log(onlineUsers)}
           </div>
         </div>
       </div>

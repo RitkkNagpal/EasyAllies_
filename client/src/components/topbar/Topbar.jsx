@@ -5,11 +5,19 @@ import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { logoutCall } from "../../apiCalls";
+import {useNavigate} from "react-router"
 
 export default function Topbar() {
   const { user, dispatch } = useContext(AuthContext);
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+  const navigate = useNavigate()
 
+  const handleKeyPress = (e)=>{
+    let username = e.target.value;
+    if(username && e.key == "Enter"){
+      navigate(`/profile/${username}`);
+    }
+  }
   const handleClick = () => {
     logoutCall(dispatch);
   };
@@ -33,10 +41,11 @@ export default function Topbar() {
       <div className="topbarCenter">
         <div className="searchbar">
           <Search className="searchIcon" />
-          <input
+          <input  
             type="text"
-            placeholder="Search for a friend, post or video"
+            placeholder="Search for a friend"
             className="searchInput"
+            onKeyPress={handleKeyPress}
           />
         </div>
       </div>

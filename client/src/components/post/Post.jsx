@@ -52,7 +52,7 @@ export default function Post({ post }) {
             <span className="postDate">{format(post.createdAt)}</span>
           </div>
           <div className="postTopRight">
-            <MoreVert />
+            {/* <MoreVert /> */}
           </div>
         </div>
         <div className="postCenter">
@@ -76,7 +76,7 @@ export default function Post({ post }) {
             <span className="postLikeCounter">{like} people like it</span>
           </div>
           <div className="postBottomRight">
-            <span className="postCommentText">{post.comment} comments</span>
+            {/* <span className="postCommentText">{post.comment} comments</span> */}
           </div>
         </div>
       </div>

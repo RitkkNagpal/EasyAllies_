@@ -5,19 +5,19 @@ import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { logoutCall } from "../../apiCalls";
-import {useNavigate} from "react-router"
+import { useNavigate } from "react-router";
 
 export default function Topbar() {
   const { user, dispatch } = useContext(AuthContext);
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  const handleKeyPress = (e)=>{
+  const handleKeyPress = (e) => {
     let username = e.target.value;
-    if(username && e.key == "Enter"){
+    if (username && e.key == "Enter") {
       navigate(`/profile/${username}`);
     }
-  }
+  };
   const handleClick = () => {
     logoutCall(dispatch);
   };
@@ -29,10 +29,19 @@ export default function Topbar() {
         </Link>
       </div>
       <div className="debate-portal">
-        <a href="https://easyallies.herokuapp.com/" target="_blank" className="debate-portal-link">
+        <a
+          href="https://easyallies.herokuapp.com/"
+          target="_blank"
+          className="debate-portal-link"
+        >
           <Button
             className="debate-portal-button"
-            style={{ color: "white",marginRight:"5px", border:"1px solid white", borderRadius:"15px" }}
+            style={{
+              color: "white",
+              marginRight: "5px",
+              border: "1px solid white",
+              borderRadius: "15px",
+            }}
           >
             Enter Debate Room
           </Button>
@@ -41,7 +50,7 @@ export default function Topbar() {
       <div className="topbarCenter">
         <div className="searchbar">
           <Search className="searchIcon" />
-          <input  
+          <input
             type="text"
             placeholder="Search for a friend"
             className="searchInput"
@@ -51,8 +60,12 @@ export default function Topbar() {
       </div>
       <div className="topbarRight">
         <div className="topbarLinks">
-          <span className="topbarLink">Homepage</span>
-          <span className="topbarLink">Timeline</span>
+          <Link to="/" style={{ textDecoration: "none",color:"white" }}>
+            <span className="topbarLink">Homepage</span>
+          </Link>
+          <Link to={`/profile/${user.username}`} style={{ textDecoration: "none",color:"white" }}>
+            <span className="topbarLink">Timeline</span>
+          </Link>
         </div>
         <div className="topbarIcons">
           <div className="topbarIconItem">
@@ -60,8 +73,8 @@ export default function Topbar() {
             <span className="topbarIconBadge">1</span>
           </div>
           <div className="topbarIconItem">
-            <Link to = "/messenger">
-              <Chat style = {{color:"white"}}/>
+            <Link to="/messenger">
+              <Chat style={{ color: "white" }} />
               <span className="topbarIconBadge">2</span>
             </Link>
           </div>
